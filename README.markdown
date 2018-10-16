@@ -8,7 +8,7 @@ frequent kernel panics. Probably don't use this for now.
 Modifying bumblebeed to add functionality that removes the need 
 for bbswitch. Since Linux Kernel 4.8 baked in new power management 
 methods for PCI devices, bbswitch is not actually necessary and 
-breaks core kernel functionality. Thanks to [endrift] (https://twitter.com/endrift) for the information on how to enable kernel automatic power-down of unused PCI devices.
+breaks core kernel functionality. Thanks to [endrift](https://twitter.com/endrift) for the information on how to enable kernel automatic power-down of unused PCI devices.
 
 Enabling Kernel Power Auto-Management for your NVIDIA card
 -----------------------------------------------------------
