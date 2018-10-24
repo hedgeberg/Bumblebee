@@ -22,7 +22,7 @@
 #pragma once
 
 /* Buffer size for result from reading files for switching methods */
-#define BBS_BUFFER 100
+#define BBS_BUFFER 200
 
 enum switch_state {
   SWITCH_ON = 1,
@@ -58,8 +58,13 @@ int switcheroo_is_available(struct switch_info);
 void switcheroo_on(void);
 void switcheroo_off(void);
 
+enum switch_state linux_native_status(void);
+int linux_native_is_available(struct switch_info);
+void linux_native_on(void);
+void linux_native_off(void);
+
 /* number of switchers as defined in switching.c */
-#define SWITCHERS_COUNT 2
+#define SWITCHERS_COUNT 3
 struct switching_method switching_methods[SWITCHERS_COUNT];
 
 /* A switching method that can be used or NULL if none */

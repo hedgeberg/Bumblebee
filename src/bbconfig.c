@@ -42,6 +42,7 @@ const char *bb_pm_method_string[PM_METHODS_COUNT] = {
   /* the below names are used in switch/switching.c */
   "bbswitch",
   "switcheroo",
+  "linux-native"
 };
 
 struct bb_status_struct bb_status;
