@@ -29,7 +29,7 @@ struct switching_method switching_methods[SWITCHERS_COUNT] = {
           bbswitch_on, bbswitch_off},
   {"switcheroo", 0, switcheroo_status, switcheroo_is_available,
           switcheroo_on, switcheroo_off},
-  {"linux_native", 1, linux_native_status, linux_native_is_available,
+  {"linux_native", 0, linux_native_status, linux_native_is_available,
           linux_native_on, linux_native_off}
 };
 
