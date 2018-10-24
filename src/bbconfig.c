@@ -42,7 +42,7 @@ const char *bb_pm_method_string[PM_METHODS_COUNT] = {
   /* the below names are used in switch/switching.c */
   "bbswitch",
   "switcheroo",
-  "linux-native"
+  "linux_native"
 };
 
 struct bb_status_struct bb_status;
@@ -107,11 +107,19 @@ void set_string_value(char ** configstring, char * newvalue) {
 enum bb_pm_method bb_pm_method_from_string(char *value) {
   /* loop backwards through all possible values. If no valid value is found,
    * assume the first element ("none") */
+  //bb_log(LOG_INFO, "looking for PMMethod %s\n", value);
+  bb_log(LOG_INFO, "The number of PMMethods is %d\n", PM_METHODS_COUNT);
   enum bb_pm_method method_index = PM_METHODS_COUNT;
   while (method_index > 0) {
+    bb_log(LOG_INFO, "trying PMMethod: %s\n", bb_pm_method_string[method_index-1]);
     if (strcmp(value, bb_pm_method_string[--method_index]) == 0) {
       break;
     }
+  }
+  if(method_index == 0){
+    bb_log(LOG_WARNING, "Could not find PMMethod %s!\n", value);
+  } else {
+    bb_log(LOG_INFO, "Found valid PMMethod @ %d\n", method_index);
   }
   return method_index;
 }

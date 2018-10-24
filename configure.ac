@@ -52,9 +52,9 @@ if test "x" = "x$CONF_PIDFILE"; then
 fi
 ])
 
-AC_DEFINE_CONF(CONF_PM_METHOD, [Power management method, valid values are auto (default), bbswitch, switcheroo and none], [
+AC_DEFINE_CONF(CONF_PM_METHOD, [Power management method, valid values are auto (default), bbswitch, switcheroo, linux_native and none], [
 case $CONF_PM_METHOD in
-auto|bbswitch|switcheroo|none) ;;
+auto|bbswitch|switcheroo|linux_native|none) ;;
 "") CONF_PM_METHOD=auto ;;
 *) AC_MSG_ERROR([Invalid value for CONF_PM_METHOD]) ;;
 esac
