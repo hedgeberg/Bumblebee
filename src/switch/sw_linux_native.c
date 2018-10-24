@@ -8,6 +8,12 @@
 #include "../module.h"
 
 /**
+ * TODO: Need to handle wake-from-sleep gracefully.
+ * TODO: Need to un-hardcode nvidia driver names
+ * TODO: Need to locate card + bridge on PCI bus, and set power controls.
+ */
+
+/**
  * Reports the status of the nvidia driver to conform with the expectations for bbswitch
  *
  * @return SWITCH_OFF if card is off, SWITCH_ON if card is on.
@@ -50,7 +56,7 @@ void linux_native_on(void) {
  */
 void linux_native_off(void) {
   if(module_is_loaded("nvidia_modeset")){
-  	bb_log(LOG_INFO, "nvidia_modeset is loaded, must be unloaded before nvidia");
+  	bb_log(LOG_INFO, "nvidia_modeset is loaded, must be unloaded before nvidia\n");
   	module_unload("nvidia_modeset");
   }
   module_unload("nvidia");
