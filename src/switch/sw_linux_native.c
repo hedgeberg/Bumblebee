@@ -59,6 +59,10 @@ void linux_native_off(void) {
   	bb_log(LOG_INFO, "nvidia_modeset is loaded, must be unloaded before nvidia\n");
   	module_unload("nvidia_modeset");
   }
+  if(module_is_loaded("nvidia_uvm")){
+    bb_log(LOG_INFO, "nvidia_uvm is loaded, must be unloaded before nvidia\n");
+    module_unload("nvidia_uvm");
+  }
   module_unload("nvidia");
   return;
 }//bbswitch_off
