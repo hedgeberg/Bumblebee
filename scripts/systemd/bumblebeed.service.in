@@ -5,6 +5,7 @@ Description=Bumblebee C Daemon
 Type=simple
 CPUSchedulingPolicy=idle
 ExecStart=@SBINDIR@/bumblebeed
+ExecStartPre=/bin/sh -c 'echo auto > /sys/bus/pci/devices/0000:01:00.0/power/control && echo auto > /sys/bus/pci/devices/0000:00:01.0/power/control'
 Restart=always
 RestartSec=60
 StandardOutput=kmsg
