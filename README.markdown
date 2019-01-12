@@ -2,16 +2,53 @@ Fork-Specific Notes
 ====================
 
 
-NOTE: VERY BUGGY. Currently bumblebeed still tries to use bbswitch, which causes 
-frequent kernel panics. Probably don't use this for now.
-
 Modifying bumblebeed to add functionality that removes the need 
 for bbswitch. Since Linux Kernel 4.8 baked in new power management 
 methods for PCI devices, bbswitch is not actually necessary and 
 breaks core kernel functionality. Thanks to [endrift](https://twitter.com/endrift) for the information on how to enable kernel automatic power-down of unused PCI devices.
 
+If you plan to use this, make sure to build from source in this branch and
+configure appropriately. If you have any questions about how to do this, DM me 
+on my [twitter](https://twitter.com/hedgeberg).
+
+Currently, setting pmmethod=linux\_native in bumblebee.conf is most of what you 
+need to get this working after build. Only NVIDIA cards running the nvidia module 
+are supported with this method. Feel free to direct any questions to the twitter 
+linked above. 
+
+
+
+Disabling DM AutoLoading the NVIDIA Module, Despite Blacklist
+--------------------------------------------------------------
+
+Some Display Managers (DMs) like gdm do some automation for libglvnd 
+compatibility which results in the nvidia module being loaded automatically. 
+In order to fix this, it is recommended that you rename the file that triggers 
+the autoload event. On my Arch environment running gdm, this file is:
+
+```
+/usr/share/glvnd/egl_vendor.d/10_nvidia.json
+
+```
+There seems to be no way to make this file not autoload under gdm, even if the 
+nvidia module is blacklisted (thanks, gnome devs.) and to make matters worse it 
+gets replaced on each update, (even better case for not having a configurable 
+disable mechanism!) so I mv the file so that it is no longer discovered during boot:
+
+```
+mv /usr/share/glvnd/egl_vendor.d/10_nvidia.json /usr/share/glvnd/egl_vendor.d/10_nvidia.json.disabled
+```
+
+I'll add a pacman hook to fix this once I also get automated pkgbuild working, 
+so that people running Arch can automate this problem away. Thanks again to endrift for
+this tip since she was apparently troubleshooting this problem on-and-off for almost a year!
+
+
+
 Enabling Kernel Power Auto-Management for your NVIDIA card
 -----------------------------------------------------------
+
+!! This is no longer necessary to do manually, because it's automated in the systemd.in file stored here, but you will have to make sure the graphics card and bridge locations are correct. !!
 
 First, resolve the PCI address of your card and the card's PCIe bridge. 
 Then, for the current workaround, add the following to 
@@ -23,6 +60,7 @@ ExecStartPre=/bin/sh -c 'echo auto > /sys/bus/pci/devices/0000:01:00.0/power/con
 
 This should enable the auto power mode, and linux should now power the 
 card down on its own when the driver is not modprobed. 
+
 
 
 Bumblebee Daemon
